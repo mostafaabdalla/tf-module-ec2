@@ -33,7 +33,7 @@ resource "aws_instance" "this" {
   dynamic "capacity_reservation_specification" {
     for_each = var.capacity_reservation_specification != null ? [var.capacity_reservation_specification] : []
     content {
-      capacity_reservation_preference = lookup(capacity_reservation_specification.value, "capacity_reservation_preference", null)
+      capacity_reservation_preference = lookup(capacity_reservation_specification.value, "capacity_reservation_preference", open)
 
       dynamic "capacity_reservation_target" {
         for_each = lookup(capacity_reservation_specification.value, "capacity_reservation_target", [])
@@ -47,13 +47,13 @@ resource "aws_instance" "this" {
   dynamic "root_block_device" {
     for_each = var.root_block_device
     content {
-      delete_on_termination = lookup(root_block_device.value, "delete_on_termination", null)
-      encrypted             = lookup(root_block_device.value, "encrypted", null)
-      iops                  = lookup(root_block_device.value, "iops", null)
+      delete_on_termination = lookup(root_block_device.value, "delete_on_termination", true)
+      encrypted             = lookup(root_block_device.value, "encrypted", false)
+      iops                  = lookup(root_block_device.value, "iops", 100)
       kms_key_id            = lookup(root_block_device.value, "kms_key_id", null)
-      volume_size           = lookup(root_block_device.value, "volume_size", null)
-      volume_type           = lookup(root_block_device.value, "volume_type", null)
-      throughput            = lookup(root_block_device.value, "throughput", null)
+      volume_size           = lookup(root_block_device.value, "volume_size", 8)
+      volume_type           = lookup(root_block_device.value, "volume_type", "gp2")
+      throughput            = lookup(root_block_device.value, "throughput", 0)
       tags                  = lookup(root_block_device.value, "tags", null)
     }
   }
@@ -61,15 +61,15 @@ resource "aws_instance" "this" {
   dynamic "ebs_block_device" {
     for_each = var.ebs_block_device
     content {
-      delete_on_termination = lookup(ebs_block_device.value, "delete_on_termination", null)
+      delete_on_termination = lookup(ebs_block_device.value, "delete_on_termination", true)
       device_name           = ebs_block_device.value.device_name
-      encrypted             = lookup(ebs_block_device.value, "encrypted", null)
+      encrypted             = lookup(ebs_block_device.value, "encrypted", false)
       iops                  = lookup(ebs_block_device.value, "iops", null)
       kms_key_id            = lookup(ebs_block_device.value, "kms_key_id", null)
       snapshot_id           = lookup(ebs_block_device.value, "snapshot_id", null)
-      volume_size           = lookup(ebs_block_device.value, "volume_size", null)
-      volume_type           = lookup(ebs_block_device.value, "volume_type", null)
-      throughput            = lookup(ebs_block_device.value, "throughput", null)
+      volume_size           = lookup(ebs_block_device.value, "volume_size", 8)
+      volume_type           = lookup(ebs_block_device.value, "volume_type", "gp2")
+      throughput            = lookup(ebs_block_device.value, "throughput", 0)
     }
   }
 
@@ -88,7 +88,7 @@ resource "aws_instance" "this" {
       http_endpoint               = lookup(metadata_options.value, "http_endpoint", "enabled")
       http_tokens                 = lookup(metadata_options.value, "http_tokens", "optional")
       http_put_response_hop_limit = lookup(metadata_options.value, "http_put_response_hop_limit", "1")
-      instance_metadata_tags      = lookup(metadata_options.value, "instance_metadata_tags", null)
+      instance_metadata_tags      = lookup(metadata_options.value, "instance_metadata_tags", "disabled")
     }
   }
 
@@ -135,7 +135,6 @@ resource "aws_instance" "this" {
   volume_tags = var.enable_volume_tags ? merge({ "Name" = var.name }, var.volume_tags) : null
 }
 
-
 resource "aws_spot_instance_request" "this" {
   count = var.create && var.create_spot_instance ? 1 : 0
 
@@ -178,7 +177,7 @@ resource "aws_spot_instance_request" "this" {
   dynamic "capacity_reservation_specification" {
     for_each = var.capacity_reservation_specification != null ? [var.capacity_reservation_specification] : []
     content {
-      capacity_reservation_preference = lookup(capacity_reservation_specification.value, "capacity_reservation_preference", null)
+      capacity_reservation_preference = lookup(capacity_reservation_specification.value, "capacity_reservation_preference", open)
 
       dynamic "capacity_reservation_target" {
         for_each = lookup(capacity_reservation_specification.value, "capacity_reservation_target", [])
@@ -192,13 +191,13 @@ resource "aws_spot_instance_request" "this" {
   dynamic "root_block_device" {
     for_each = var.root_block_device
     content {
-      delete_on_termination = lookup(root_block_device.value, "delete_on_termination", null)
-      encrypted             = lookup(root_block_device.value, "encrypted", null)
-      iops                  = lookup(root_block_device.value, "iops", null)
+      delete_on_termination = lookup(root_block_device.value, "delete_on_termination", true)
+      encrypted             = lookup(root_block_device.value, "encrypted", false)
+      iops                  = lookup(root_block_device.value, "iops", 100)
       kms_key_id            = lookup(root_block_device.value, "kms_key_id", null)
-      volume_size           = lookup(root_block_device.value, "volume_size", null)
-      volume_type           = lookup(root_block_device.value, "volume_type", null)
-      throughput            = lookup(root_block_device.value, "throughput", null)
+      volume_size           = lookup(root_block_device.value, "volume_size", 8)
+      volume_type           = lookup(root_block_device.value, "volume_type", "gp2")
+      throughput            = lookup(root_block_device.value, "throughput", 0)
       tags                  = lookup(root_block_device.value, "tags", null)
     }
   }
@@ -206,15 +205,15 @@ resource "aws_spot_instance_request" "this" {
   dynamic "ebs_block_device" {
     for_each = var.ebs_block_device
     content {
-      delete_on_termination = lookup(ebs_block_device.value, "delete_on_termination", null)
+      delete_on_termination = lookup(ebs_block_device.value, "delete_on_termination", true)
       device_name           = ebs_block_device.value.device_name
-      encrypted             = lookup(ebs_block_device.value, "encrypted", null)
+      encrypted             = lookup(ebs_block_device.value, "encrypted", false)
       iops                  = lookup(ebs_block_device.value, "iops", null)
       kms_key_id            = lookup(ebs_block_device.value, "kms_key_id", null)
       snapshot_id           = lookup(ebs_block_device.value, "snapshot_id", null)
-      volume_size           = lookup(ebs_block_device.value, "volume_size", null)
-      volume_type           = lookup(ebs_block_device.value, "volume_type", null)
-      throughput            = lookup(ebs_block_device.value, "throughput", null)
+      volume_size           = lookup(ebs_block_device.value, "volume_size", 8)
+      volume_type           = lookup(ebs_block_device.value, "volume_type", "gp2")
+      throughput            = lookup(ebs_block_device.value, "throughput", 0)
     }
   }
 

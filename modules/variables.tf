@@ -19,7 +19,7 @@ variable "ami" {
 variable "associate_public_ip_address" {
   description = "Whether to associate a public IP address with an instance in a VPC"
   type        = bool
-  default     = null
+  default     = true
 }
 
 variable "availability_zone" {
@@ -43,7 +43,7 @@ variable "cpu_credits" {
 variable "disable_api_termination" {
   description = "If true, enables EC2 Instance Termination Protection"
   type        = bool
-  default     = null
+  default     = false
 }
 
 variable "ebs_block_device" {
@@ -55,13 +55,13 @@ variable "ebs_block_device" {
 variable "ebs_optimized" {
   description = "If true, the launched EC2 instance will be EBS-optimized"
   type        = bool
-  default     = null
+  default     = false
 }
 
 variable "enclave_options_enabled" {
   description = "Whether Nitro Enclaves will be enabled on the instance. Defaults to `false`"
   type        = bool
-  default     = null
+  default     = false
 }
 
 variable "ephemeral_block_device" {
@@ -73,13 +73,13 @@ variable "ephemeral_block_device" {
 variable "get_password_data" {
   description = "If true, wait for password data to become available and retrieve it."
   type        = bool
-  default     = null
+  default     = false
 }
 
 variable "hibernation" {
   description = "If true, the launched EC2 instance will support hibernation"
   type        = bool
-  default     = null
+  default     = false
 }
 
 variable "host_id" {
@@ -97,7 +97,7 @@ variable "iam_instance_profile" {
 variable "instance_initiated_shutdown_behavior" {
   description = "Shutdown behavior for the instance. Amazon defaults this to stop for EBS-backed instances and terminate for instance-store instances. Cannot be set on instance-store instance" # https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/terminating-instances.html#Using_ChangingInstanceInitiatedShutdownBehavior
   type        = string
-  default     = null
+  default     = "stop"
 }
 
 variable "instance_type" {
@@ -109,7 +109,7 @@ variable "instance_type" {
 variable "ipv6_address_count" {
   description = "A number of IPv6 addresses to associate with the primary network interface. Amazon EC2 chooses the IPv6 addresses from the range of your subnet"
   type        = number
-  default     = null
+  default     = 0
 }
 
 variable "ipv6_addresses" {
@@ -193,7 +193,7 @@ variable "tags" {
 variable "tenancy" {
   description = "The tenancy of the instance (if the instance is running in a VPC). Available values: default, dedicated, host."
   type        = string
-  default     = null
+  default     = "default"
 }
 
 variable "user_data" {
