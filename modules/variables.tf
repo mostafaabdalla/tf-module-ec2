@@ -19,7 +19,7 @@ variable "ami" {
 variable "associate_public_ip_address" {
   description = "Whether to associate a public IP address with an instance in a VPC"
   type        = bool
-  default     = true
+  default     = null
 }
 
 variable "availability_zone" {
@@ -55,7 +55,7 @@ variable "ebs_block_device" {
 variable "ebs_optimized" {
   description = "If true, the launched EC2 instance will be EBS-optimized"
   type        = bool
-  default     = false
+  default     = null
 }
 
 variable "enclave_options_enabled" {
@@ -260,13 +260,13 @@ variable "spot_price" {
 variable "spot_wait_for_fulfillment" {
   description = "If set, Terraform will wait for the Spot Request to be fulfilled, and will throw an error if the timeout of 10m is reached"
   type        = bool
-  default     = null
+  default     = false
 }
 
 variable "spot_type" {
   description = "If set to one-time, after the instance is terminated, the spot request will be closed. Default `persistent`"
   type        = string
-  default     = null
+  default     = "persistent"
 }
 
 variable "spot_launch_group" {
@@ -278,13 +278,13 @@ variable "spot_launch_group" {
 variable "spot_block_duration_minutes" {
   description = "The required duration for the Spot instances, in minutes. This value must be a multiple of 60 (60, 120, 180, 240, 300, or 360)"
   type        = number
-  default     = null
+  default     = 0
 }
 
 variable "spot_instance_interruption_behavior" {
   description = "Indicates Spot instance behavior when it is interrupted. Valid values are `terminate`, `stop`, or `hibernate`"
   type        = string
-  default     = null
+  default     = "terminate"
 }
 
 variable "spot_valid_until" {
