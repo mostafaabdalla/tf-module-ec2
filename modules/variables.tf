@@ -1,9 +1,3 @@
-variable "create" {
-  description = "Whether to create an instance"
-  type        = bool
-  default     = true
-}
-
 variable "name" {
   description = "Name to be used on EC2 instance created"
   type        = string
@@ -22,11 +16,12 @@ variable "associate_public_ip_address" {
   default     = null
 }
 
-variable "availability_zone" {
+/*variable "availability_zone" {
   description = "AZ to start the instance in"
   type        = string
   default     = null
 }
+*/
 
 variable "capacity_reservation_specification" {
   description = "Describes an instance's Capacity Reservation targeting option"
@@ -118,11 +113,12 @@ variable "ipv6_addresses" {
   default     = null
 }
 
-variable "key_name" {
+/*variable "key_name" {
   description = "Key name of the Key Pair to use for the instance; which can be managed using the `aws_key_pair` resource"
   type        = string
   default     = null
 }
+*/
 
 variable "launch_template" {
   description = "Specifies a Launch Template to configure the instance. Parameters configured on this resource will override the corresponding parameters in the Launch Template"
@@ -196,11 +192,12 @@ variable "tenancy" {
   default     = "default"
 }
 
-variable "user_data" {
+/*variable "user_data" {
   description = "The user data to provide when launching the instance. Do not pass gzip-compressed data via this argument; see user_data_base64 instead."
   type        = string
   default     = null
 }
+*/
 
 variable "user_data_base64" {
   description = "Can be used instead of user_data to pass base64-encoded binary data directly. Use this instead of user_data whenever the value is not a valid UTF-8 string. For example, gzip-encoded user data must be base64-encoded and passed via this argument to avoid corruption."
@@ -241,60 +238,5 @@ variable "cpu_core_count" {
 variable "cpu_threads_per_core" {
   description = "Sets the number of CPU threads per core for an instance (has no effect unless cpu_core_count is also set)."
   type        = number
-  default     = null
-}
-
-# Spot instance request
-variable "create_spot_instance" {
-  description = "Depicts if the instance is a spot instance"
-  type        = bool
-  default     = false
-}
-
-variable "spot_price" {
-  description = "The maximum price to request on the spot market. Defaults to on-demand price"
-  type        = string
-  default     = null
-}
-
-variable "spot_wait_for_fulfillment" {
-  description = "If set, Terraform will wait for the Spot Request to be fulfilled, and will throw an error if the timeout of 10m is reached"
-  type        = bool
-  default     = false
-}
-
-variable "spot_type" {
-  description = "If set to one-time, after the instance is terminated, the spot request will be closed. Default `persistent`"
-  type        = string
-  default     = "persistent"
-}
-
-variable "spot_launch_group" {
-  description = "A launch group is a group of spot instances that launch together and terminate together. If left empty instances are launched and terminated individually"
-  type        = string
-  default     = null
-}
-
-variable "spot_block_duration_minutes" {
-  description = "The required duration for the Spot instances, in minutes. This value must be a multiple of 60 (60, 120, 180, 240, 300, or 360)"
-  type        = number
-  default     = 0
-}
-
-variable "spot_instance_interruption_behavior" {
-  description = "Indicates Spot instance behavior when it is interrupted. Valid values are `terminate`, `stop`, or `hibernate`"
-  type        = string
-  default     = "terminate"
-}
-
-variable "spot_valid_until" {
-  description = "The end date and time of the request, in UTC RFC3339 format(for example, YYYY-MM-DDTHH:MM:SSZ)"
-  type        = string
-  default     = null
-}
-
-variable "spot_valid_from" {
-  description = "The start date and time of the request, in UTC RFC3339 format(for example, YYYY-MM-DDTHH:MM:SSZ)"
-  type        = string
   default     = null
 }
